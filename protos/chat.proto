@@ -1,4 +1,7 @@
-// The chat service definition.
+// Protocol Buffers file for defining the messages and service used in a simple chat application based on gRPC.
+// This file defines message types for users and chat messages, as well as a gRPC service for chat functionality.
+// The chat service allows clients to get a list of users, send chat messages,
+// and subscribe to a stream of incoming messages.
 syntax = "proto3";
 
 // Information about a user.
@@ -25,10 +28,13 @@ message SendMessageRequest {
   Message message = 1;
 }
 
+// Request to get a list of users.
 message GetUsersRequest {}
 
+// Response for sending a chat message.
 message SendMessageReply {}
 
+// Request to subscribe to a stream of chat messages.
 message SubscribeRequest {
   string login = 1;
 }
@@ -44,5 +50,3 @@ service ChatService {
   // Subscribe to a stream of chat messages.
   rpc Subscribe(SubscribeRequest) returns (stream Message);
 }
-
-
