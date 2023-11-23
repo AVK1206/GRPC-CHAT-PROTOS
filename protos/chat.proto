@@ -16,7 +16,7 @@ message Message {
 }
 
 // List of users.
-message UserListReply {
+message GetUsersReply {
   repeated User users = 1;
 }
 
@@ -25,27 +25,24 @@ message SendMessageRequest {
   Message message = 1;
 }
 
-// Reply containing a stream of chat messages.
-message SubscribeReply {
-  repeated Message messages = 1;
-}
-
-message UserListRequest {}
+message GetUsersRequest {}
 
 message SendMessageReply {}
 
-message SubscribeRequest {}
+message SubscribeRequest {
+  string login = 1;
+}
 
 // ChatService provides RPC methods for chat functionality.
 service ChatService {
   // Get a list of users.
-  rpc UserList(UserListRequest) returns (UserListReply);
+  rpc GetUsers(GetUsersRequest) returns (GetUsersReply);
 
   // Send a chat message.
   rpc SendMessage(SendMessageRequest) returns (SendMessageReply);
 
   // Subscribe to a stream of chat messages.
-  rpc Subscribe(SubscribeRequest) returns (stream SubscribeReply);
+  rpc Subscribe(SubscribeRequest) returns (stream Message);
 }
 
 
