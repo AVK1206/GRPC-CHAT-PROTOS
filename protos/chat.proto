@@ -1,0 +1,51 @@
+// The chat service definition.
+syntax = "proto3";
+
+// Information about a user.
+message User {
+  string login = 1;
+  string full_name = 2;
+}
+
+// Message definition for a chat message.
+message Message {
+  string from_user = 1;
+  string to_user = 2;
+  int64 timestamp = 3;
+  string body = 4;
+}
+
+// List of users.
+message UserListReply {
+  repeated User users = 1;
+}
+
+// Request to send a chat message.
+message SendMessageRequest {
+  Message message = 1;
+}
+
+// Reply containing a stream of chat messages.
+message SubscribeReply {
+  repeated Message messages = 1;
+}
+
+message UserListRequest {}
+
+message SendMessageReply {}
+
+message SubscribeRequest {}
+
+// ChatService provides RPC methods for chat functionality.
+service ChatService {
+  // Get a list of users.
+  rpc UserList(UserListRequest) returns (UserListReply);
+
+  // Send a chat message.
+  rpc SendMessage(SendMessageRequest) returns (SendMessageReply);
+
+  // Subscribe to a stream of chat messages.
+  rpc Subscribe(SubscribeRequest) returns (stream SubscribeReply);
+}
+
+
